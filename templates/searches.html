@@ -1,0 +1,69 @@
+{% extends 'base.html' %}{% block content %}
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-9">
+            <div class="section-title">
+              <span class="caption d-block small">Categories</span>
+
+              <h2>Search results for "{{ request.GET.q }}"</h2>
+            </div>
+             {% if page_obj %}
+            {% for post in page_obj %}
+            <div class="post-entry-2 d-flex">
+              <div class="thumbnail order-md-2" style="background-image: url('images/img_h_4.jpg')"></div>
+              <div class="contents order-md-1 pl-0">
+                <h2><a href="blog-single.html">{{ post.title }}</a></h2>
+                <p class="mb-3">{{ post.content| truncatewords:40 }}</p>
+                <div class="post-meta">
+                  <span class="d-block"><a href="#">{{ post.author }}</a> in <a href="#">{{ post.category }}</a></span>
+                  <span class="date-read">{{ post.created_on }}<span class="mx-1">&bullet;</span> 3 min read <span class="icon-star2"></span></span>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+              {% else %}
+              <h2>No search results for {{ request.GET.q }}</h2>
+                {% endif %}
+          </div>
+
+
+
+          <div class="col-lg-3">
+
+              {% include 'popular.html' %}
+
+          </div>
+        </div>
+
+          {% if is_paginated %}
+        <div class="row">
+          <div class="col-lg-6">
+            <ul class="custom-pagination list-unstyled">
+              <div class="pagination">
+                  <span class="step-links">
+                      {% if page_obj.has_previous %}
+                          <a href="?page=1">&laquo; first</a>
+                          <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"">previous</a>
+                      {% endif %}
+
+                      <span class="current">
+                          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                      </span>
+
+                      {% if page_obj.has_next %}
+                          <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"">next</a>
+                          <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"">last &raquo;</a>
+                      {% endif %}
+                  </span>
+              </div>
+            </ul>
+          </div>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+
+
+{% endblock content %}
