@@ -133,11 +133,11 @@ def contact(request):
             message = form.cleaned_data['message']
             try:
                 subject = [first_name + ' ' + last_name + ',  ' + 'phone number: '  + str(tel_number)]
-                send_mail(subject, message, from_email, ['youngbossravasco@gmail.com'])
+                send_mail(subject, message, from_email, ['youremail@gmail.com'])
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
 
-            send_mail(subject, message, from_email, ['youngbossravasco@gmail.com'])
+            send_mail(subject, message, from_email, ['youremail@gmail.com'])
             return HttpResponse('Thank you for your message.')
 
     context = {'form': form, 'categories': categories}
